@@ -1,0 +1,25 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Administrator Whitelist: Only allow access if the authenticated email matches exactly.
+    function isAdmin() {
+      return request.auth != null && request.auth.token.email == 'ryo.gilgamesh@gmail.com';
+    }
+
+    match /users/{userId}/notes/{noteId} {
+      // Users can only access their own notes if they are the admin.
+      allow read, write: if request.auth.uid == userId && isAdmin();
+    }
+
+    match /users/{userId}/folders/{folderId} {
+      // Users can only access their own folders if they are the admin.
+      allow read, write: if request.auth.uid == userId && isAdmin();
+    }
+    
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
