@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { MainLayout } from './features/layout/MainLayout';
 import { AuthGuard } from './components/AuthGuard';
 import { useNotes } from './features/filesystem/useNotes';
@@ -13,7 +12,6 @@ import classNames from 'classnames';
 import { FileText, FolderPlus, CheckSquare, X, Trash2 } from 'lucide-react';
 import { Breadcrumbs } from './components/ui/Breadcrumbs';
 import { ConfirmDialog } from './components/ui/ConfirmDialog';
-import { FileTreeSkeleton } from './components/ui/Skeleton';
 import type { ClipboardState } from './types/contextMenu';
 import type { Note } from './types';
 
@@ -549,7 +547,7 @@ function App() {
             )}
 
             {loading ? (
-              <FileTreeSkeleton />
+              <div className="p-4 text-center text-sm text-secondary animate-pulse">読み込み中...</div>
             ) : filteredNotes.length === 0 && searchQuery.trim() ? (
               <div className="p-4 text-center text-sm text-secondary">
                 「{searchQuery}」に一致するノートがありません
@@ -613,16 +611,9 @@ function App() {
           </div>
         }
       >
-        <AnimatePresence mode="wait">
+        <div className="flex h-full w-full">
           {activeNote ? (
-            <motion.div
-              key={activeNote.id}
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -10 }}
-              transition={{ duration: 0.2 }}
-              className="flex flex-col h-full w-full"
-            >
+            <div className="flex flex-col h-full w-full">
               <header className="flex flex-col p-4 border-b border-border bg-midnight/50 backdrop-blur-sm sticky top-0 z-10">
                 {/* パンくずリスト */}
                 <Breadcrumbs
@@ -668,16 +659,9 @@ function App() {
                   onSave={handleUpdateContent}
                 />
               </div>
-            </motion.div>
+            </div>
           ) : (
-            <motion.div
-              key="empty-state"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.2 }}
-              className="flex flex-col items-center justify-center h-full w-full text-secondary p-6"
-            >
+            <div className="flex flex-col items-center justify-center h-full w-full text-secondary animate-fade-in p-6">
               <div className="p-6 rounded-full bg-surface-highlight/30 mb-6">
                 <FileText size={48} className="opacity-50" />
               </div>
@@ -692,9 +676,9 @@ function App() {
               >
                 新規作成
               </button>
-            </motion.div>
+            </div>
           )}
-        </AnimatePresence>
+        </div>
       </MainLayout>
 
       <RenameModal

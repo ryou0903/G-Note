@@ -19,7 +19,6 @@ import type { ClipboardState } from '../../../types/contextMenu';
 import { buildFileTree, flattenTree } from '../fileTree';
 import type { FlatTreeItem } from '../fileTree';
 import { useContextMenuActions } from '../hooks/useContextMenuActions';
-import { triggerHaptic, HapticPatterns } from '../../../utils/haptics';
 
 interface FileTreeProps {
     notes: Note[];
@@ -96,7 +95,6 @@ const DraggableNoteItem: React.FC<DraggableProps> = ({
     };
 
     const handleClick = () => {
-        triggerHaptic(HapticPatterns.Light);
         if (isSelectionMode && onToggleSelection) {
             onToggleSelection();
         } else {
@@ -548,7 +546,6 @@ export const FileTree: React.FC<FileTreeProps> = ({
     }, [scrollToNoteId, flatItems]);
 
     const toggleFolder = (path: string) => {
-        triggerHaptic(HapticPatterns.Light);
         setExpandedPaths(prev => {
             const next = new Set(prev);
             if (next.has(path)) {
@@ -562,7 +559,6 @@ export const FileTree: React.FC<FileTreeProps> = ({
 
 
     const handleDragStart = (event: DragStartEvent) => {
-        triggerHaptic(HapticPatterns.Selection);
         setActiveId(event.active.id as string);
         setOverFolderPath(null);
     };
@@ -653,7 +649,6 @@ export const FileTree: React.FC<FileTreeProps> = ({
 
     const handleContextMenu = (e: React.MouseEvent | React.TouchEvent, item: FlatTreeItem) => {
         e.preventDefault();
-        triggerHaptic(HapticPatterns.Medium);
 
         let clientX, clientY;
         if ('touches' in e) {
@@ -784,9 +779,14 @@ export const FileTree: React.FC<FileTreeProps> = ({
                                 title: contextMenu.target.name,
                                 type: 'file',
                                 updatedAt: contextMenu.target.item.note.updatedAt?.toLocaleString('ja-JP'),
-                                createdAt: contextMenu.target.item.note.createdAt?.toLocaleString('ja-JP'),
+                                createdAt: contextMenu.target.item.note.createdAt?.toLocaleString('ja-JP')
                             }
-                            : undefined
+                            : contextMenu.target.item && contextMenu.target.type === 'folder'
+                                ? {
+                                    title: contextMenu.target.name,
+                                    type: 'folder'
+                                }
+                                : undefined
                     }
                     onClose={() => setContextMenu(null)}
                     isMobile={isMobile}
