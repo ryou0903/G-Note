@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { onAuthStateChanged, signInWithPopup, signOut, type User } from 'firebase/auth';
+import { onAuthStateChanged, signInWithPopup, signInWithRedirect, getRedirectResult, signOut, type User } from 'firebase/auth';
 import { auth, googleProvider } from '../lib/firebase';
 
 const ADMIN_EMAIL = import.meta.env.VITE_ADMIN_EMAIL;
@@ -10,6 +10,11 @@ export const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children })
   const [denied, setDenied] = useState(false);
 
   useEffect(() => {
+    // リダイレクト認証の結果を処理
+    getRedirectResult(auth).catch((error) => {
+      console.error("Redirect auth error:", error);
+    });
+
     return onAuthStateChanged(auth, (u) => {
       if (u) {
         if (u.email === ADMIN_EMAIL) {
@@ -29,11 +34,22 @@ export const AuthGuard: React.FC<{ children: React.ReactNode }> = ({ children })
 
   const handleLogin = async () => {
     try {
+      // まずポップアップを試す（デスクトップ向け）
       await signInWithPopup(auth, googleProvider);
     } catch (error: unknown) {
-      console.error("Login failed:", error);
-      const errorMessage = error instanceof Error ? error.message : String(error);
-      alert(`Login Failed: ${errorMessage}`);
+      const errorCode = (error as { code?: string })?.code;
+      // ポップアップがブロックされた場合、またはsessionStorageエラーの場合はリダイレクトにフォールバック
+      if (errorCode === 'auth/popup-blocked' ||
+        errorCode === 'auth/popup-closed-by-user' ||
+        errorCode === 'auth/cancelled-popup-request' ||
+        String(error).includes('sessionStorage')) {
+        console.log("Popup failed, falling back to redirect...");
+        signInWithRedirect(auth, googleProvider);
+      } else {
+        console.error("Login failed:", error);
+        const errorMessage = error instanceof Error ? error.message : String(error);
+        alert(`Login Failed: ${errorMessage}`);
+      }
     }
   };
 
