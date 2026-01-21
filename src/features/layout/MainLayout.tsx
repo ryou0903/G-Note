@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { FileEdit, FolderPlus, ArrowUpDown, Locate, ChevronRight, Settings, Folder, Menu, PanelLeft, Plus, ChevronUp, ChevronDown, Check } from 'lucide-react';
+import { triggerHaptic, HapticPatterns } from '../../utils/haptics';
 
 interface MainLayoutProps {
     children: React.ReactNode;
@@ -91,14 +92,20 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                     <div className="absolute bottom-3 left-0 right-0 px-4 pointer-events-none">
                         <div className="flex items-center justify-center gap-2 pointer-events-auto">
                             <button
-                                onClick={onCreateNote}
+                                onClick={() => {
+                                    triggerHaptic(HapticPatterns.Medium);
+                                    onCreateNote?.();
+                                }}
                                 className="w-10 h-10 flex items-center justify-center text-slate-300 hover:text-white bg-slate-800/50 hover:bg-slate-700/60 backdrop-blur-xl rounded-full transition-all shadow-lg shadow-black/30 border border-white/10"
                                 title="新規ノート作成"
                             >
                                 <FileEdit size={18} />
                             </button>
                             <button
-                                onClick={onCreateFolder}
+                                onClick={() => {
+                                    triggerHaptic(HapticPatterns.Medium);
+                                    onCreateFolder?.();
+                                }}
                                 className="w-10 h-10 flex items-center justify-center text-slate-300 hover:text-white bg-slate-800/50 hover:bg-slate-700/60 backdrop-blur-xl rounded-full transition-all shadow-lg shadow-black/30 border border-white/10"
                                 title="フォルダ作成"
                             >
@@ -205,7 +212,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                 <header className="flex items-center gap-4 p-4 border-b border-border">
                     {/* Mobile: hamburger menu, Desktop: sidebar toggle when collapsed */}
                     <button
-                        onClick={() => setSidebarOpen(!isSidebarOpen)}
+                        onClick={() => {
+                            triggerHaptic(HapticPatterns.Light);
+                            setSidebarOpen(!isSidebarOpen);
+                        }}
                         className={classNames(
                             "p-2 text-secondary hover:text-white hover:bg-surface-highlight rounded-lg transition-colors",
                             isSidebarOpen && isDesktop && "hidden"
@@ -225,7 +235,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                 {/* FAB (Command Center) - Liquid Glass */}
                 <div className="fixed md:absolute bottom-[max(2rem,env(safe-area-inset-bottom))] right-6 z-30">
                     <button
-                        onClick={onFabClick}
+                        onClick={() => {
+                            triggerHaptic(HapticPatterns.Medium);
+                            if (onFabClick) onFabClick();
+                        }}
                         className="relative w-14 h-14 rounded-2xl bg-indigo-500/80 hover:bg-indigo-400/80 backdrop-blur-xl text-white shadow-2xl shadow-indigo-500/30 flex items-center justify-center transition-all active:scale-95 group border border-white/20 overflow-hidden"
                     >
                         {/* Glass shine */}

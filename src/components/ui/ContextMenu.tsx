@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useMemo } from 'react';
 import { createPortal } from 'react-dom';
 import classNames from 'classnames';
 import type { ContextMenuItem, ContextMenuState } from '../../types/contextMenu';
+import { triggerHaptic, HapticPatterns } from '../../utils/haptics';
 
 // Re-export for compatibility
 export type { ContextMenuItem };
@@ -150,54 +151,55 @@ export const ContextMenu: React.FC<ContextMenuProps> = ({
                     isMobile ? "p-4 space-y-4 max-h-[70vh]" : ""
                 )}>
                     {activeGroups.map((group, groupIndex) => (
-                        <div key={group} className={classNames(
-                            isMobile ? "bg-white/5 rounded-2xl overflow-hidden" : "py-1"
-                        )}>
-                            {groupedItems[group].map((item, index) => (
-                                <button
-                                    key={index}
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        if (!item.disabled) {
-                                            item.onClick?.();
-                                            onClose();
-                                        }
-                                    }}
-                                    disabled={item.disabled}
-                                    className={classNames(
-                                        "w-full flex items-center gap-3 transition-colors text-left relative",
-                                        isMobile
-                                            ? "px-4 py-2.5 text-[15px] font-medium active:bg-white/10 border-b border-white/5 last:border-b-0"
-                                            : "px-3 py-1.5 text-sm hover:bg-white/10 mx-1 rounded-md w-[calc(100%-8px)]",
-                                        item.variant === 'danger'
-                                            ? "text-rose-400"
-                                            : "text-slate-200",
-                                        item.disabled && "opacity-50 cursor-not-allowed"
-                                    )}
-                                >
-                                    {item.icon && (
-                                        <span className={classNames(
-                                            "flex items-center justify-center text-slate-400",
-                                            isMobile ? "w-5 h-5" : "w-4 h-4",
-                                            item.variant === 'danger' && "text-rose-400"
-                                        )}>
-                                            {React.isValidElement(item.icon)
-                                                ? React.cloneElement(item.icon as React.ReactElement, { size: isMobile ? 20 : 16 } as any)
-                                                : item.icon}
-                                        </span>
-                                    )}
-                                    <span className="flex-1">{item.label}</span>
-                                </button>
-                            ))}
-                            {/* Desktop Separator */}
+                        <React.Fragment key={group}>
+                            <div className={classNames(
+                                isMobile ? "bg-white/5 rounded-2xl overflow-hidden" : "py-1"
+                            )}>
+                                {groupedItems[group].map((item, index) => (
+                                    <button
+                                        key={index}
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            if (!item.disabled) {
+                                                triggerHaptic(HapticPatterns.Light);
+                                                item.onClick?.();
+                                                onClose();
+                                            }
+                                        }}
+                                        disabled={item.disabled}
+                                        className={classNames(
+                                            "w-full flex items-center gap-3 transition-colors text-left relative",
+                                            isMobile
+                                                ? "px-4 py-2.5 text-[15px] font-medium active:bg-white/10 border-b border-white/5 last:border-b-0"
+                                                : "px-3 py-1.5 text-sm hover:bg-white/10 mx-1 rounded-md w-[calc(100%-8px)]",
+                                            item.variant === 'danger'
+                                                ? "text-rose-400"
+                                                : "text-slate-200",
+                                            item.disabled && "opacity-50 cursor-not-allowed"
+                                        )}
+                                    >
+                                        {item.icon && (
+                                            <span className={classNames(
+                                                "flex items-center justify-center text-slate-400",
+                                                isMobile ? "w-5 h-5" : "w-4 h-4",
+                                                item.variant === 'danger' && "text-rose-400"
+                                            )}>
+                                                {React.isValidElement(item.icon)
+                                                    ? React.cloneElement(item.icon as React.ReactElement, { size: isMobile ? 20 : 16 } as any)
+                                                    : item.icon}
+                                            </span>
+                                        )}
+                                        <span className="flex-1">{item.label}</span>
+                                    </button>
+                                ))}
+                            </div>
+                            {/* Desktop Separator between groups */}
                             {!isMobile && groupIndex < activeGroups.length - 1 && (
                                 <div className="h-px bg-white/10 my-1 mx-2" />
                             )}
-                        </div>
+                        </React.Fragment>
                     ))}
                 </div>
-
-
             </div>
         </>,
         document.body
