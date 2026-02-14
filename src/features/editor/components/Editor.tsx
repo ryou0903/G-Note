@@ -137,7 +137,7 @@ export const Editor: React.FC<EditorProps> = ({ initialContent, isRendering, onS
   return (
     <div className="w-full h-full flex flex-col animate-fade-in">
       {isRendering ? (
-        <div className="flex-1 overflow-auto prose prose-invert prose-slate max-w-none p-4 md:p-8 selection:bg-accent/30 break-words">
+        <div className="flex-1 overflow-auto prose prose-invert prose-slate prose-base max-w-none p-4 md:p-8 selection:bg-accent/30 break-words">
           <ReactMarkdown
             remarkPlugins={[remarkGfm]}
             rehypePlugins={[rehypeHighlight, rehypeRaw]}
@@ -148,7 +148,7 @@ export const Editor: React.FC<EditorProps> = ({ initialContent, isRendering, onS
       ) : (
         <textarea
           ref={textareaRef}
-          className="flex-1 w-full h-full bg-transparent resize-none focus:outline-none text-primary p-4 md:p-8 font-mono text-lg leading-relaxed placeholder:text-secondary/20"
+          className="flex-1 w-full h-full bg-transparent resize-none focus:outline-none text-primary p-4 md:p-8 text-base leading-normal placeholder:text-secondary/20"
           value={content}
           onChange={handleChange}
           onPaste={handlePaste}

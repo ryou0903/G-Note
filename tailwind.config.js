@@ -34,6 +34,32 @@ export default {
                     '100%': { transform: 'translateY(0)', opacity: '1' },
                 },
             },
+            typography: {
+                DEFAULT: {
+                    css: {
+                        li: {
+                            marginTop: '0.125em',
+                            marginBottom: '0.125em',
+                        },
+                        'ul, ol': {
+                            marginTop: '0.5em',
+                            marginBottom: '0.5em',
+                        },
+                        'ul ul, ol ol, ul ol, ol ul': {
+                            marginTop: '0.125em',
+                            marginBottom: '0.125em',
+                        },
+                        p: {
+                            marginTop: '0.625em',
+                            marginBottom: '0.625em',
+                        },
+                        'h1, h2, h3, h4': {
+                            marginTop: '1em',
+                            marginBottom: '0.5em',
+                        },
+                    },
+                },
+            },
         },
     },
     plugins: [
