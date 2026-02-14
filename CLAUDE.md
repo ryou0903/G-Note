@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-G-Note is an AI Native Knowledge Base — a personal note-taking and knowledge management PWA built with React, TypeScript, and Firebase.
+G-Note is an AI Native Knowledge Base — a personal note-taking and knowledge management PWA built with React, TypeScript, and Firebase. UI/UX design is inspired by [Obsidian](https://obsidian.md/). When developing new features or modifying existing ones, keep Obsidian's design philosophy and interaction patterns in mind as a reference.
 
 ## Tech Stack
 
