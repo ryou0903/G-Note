@@ -30,3 +30,78 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-secondary/50;
 }
+
+/* Obsidian-inspired Markdown Preview Styles */
+.prose h1:first-child,
+.prose h2:first-child,
+.prose h3:first-child {
+  margin-top: 0;
+}
+
+.prose blockquote {
+  border-left-color: #6366f1;
+  background-color: rgba(99, 102, 241, 0.05);
+}
+
+.prose blockquote > p {
+  margin-top: 0.25em;
+  margin-bottom: 0.25em;
+}
+
+/* Table styling */
+.prose table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.prose th {
+  background-color: rgba(15, 23, 42, 0.5);
+  font-weight: 600;
+}
+
+.prose th,
+.prose td {
+  padding: 0.5em 0.75em;
+  border: 1px solid rgba(148, 163, 184, 0.15);
+}
+
+.prose tr:nth-child(even) {
+  background-color: rgba(15, 23, 42, 0.3);
+}
+
+/* Checkbox list styling (GFM task lists) */
+.prose ul:has(input[type="checkbox"]) {
+  list-style: none;
+  padding-left: 0;
+}
+
+.prose li:has(> input[type="checkbox"]) {
+  padding-left: 0;
+}
+
+.prose input[type="checkbox"] {
+  margin-right: 0.5em;
+  accent-color: #6366f1;
+}
+
+/* Image styling */
+.prose img {
+  border-radius: 8px;
+  border: 1px solid rgba(148, 163, 184, 0.1);
+}
+
+/* Footnote styling */
+.prose sup a {
+  color: #818cf8;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Smooth transition for interactive elements */
+.prose a {
+  transition: color 0.15s ease;
+}
+
+.prose a:hover {
+  color: #a5b4fc;
+}
