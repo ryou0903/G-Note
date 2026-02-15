@@ -37,6 +37,8 @@ export default {
             typography: {
                 DEFAULT: {
                     css: {
+                        // Base line-height (default prose-base is 1.75, too spacious)
+                        lineHeight: '1.6',
                         // Spacing
                         li: {
                             marginTop: '0.125em',
@@ -51,37 +53,37 @@ export default {
                             marginBottom: '0.125em',
                         },
                         p: {
-                            marginTop: '0.625em',
-                            marginBottom: '0.625em',
+                            marginTop: '0.4em',
+                            marginBottom: '0.4em',
                         },
                         // Headings - Obsidian-style hierarchy
                         h1: {
                             fontSize: '1.75em',
                             fontWeight: '700',
-                            marginTop: '1.5em',
-                            marginBottom: '0.5em',
+                            marginTop: '1.2em',
+                            marginBottom: '0.4em',
                             paddingBottom: '0.3em',
                             borderBottom: '1px solid rgba(148, 163, 184, 0.15)',
                         },
                         h2: {
                             fontSize: '1.4em',
                             fontWeight: '600',
-                            marginTop: '1.25em',
-                            marginBottom: '0.5em',
+                            marginTop: '1.0em',
+                            marginBottom: '0.4em',
                             paddingBottom: '0.25em',
                             borderBottom: '1px solid rgba(148, 163, 184, 0.1)',
                         },
                         h3: {
                             fontSize: '1.15em',
                             fontWeight: '600',
-                            marginTop: '1em',
-                            marginBottom: '0.4em',
+                            marginTop: '0.75em',
+                            marginBottom: '0.3em',
                         },
                         h4: {
                             fontSize: '1em',
                             fontWeight: '600',
-                            marginTop: '1em',
-                            marginBottom: '0.4em',
+                            marginTop: '0.75em',
+                            marginBottom: '0.3em',
                         },
                         // Blockquote - Obsidian-style left border
                         blockquote: {
@@ -108,8 +110,8 @@ export default {
                         // HR - subtle divider
                         hr: {
                             borderColor: 'rgba(148, 163, 184, 0.15)',
-                            marginTop: '1.5em',
-                            marginBottom: '1.5em',
+                            marginTop: '1.0em',
+                            marginBottom: '1.0em',
                         },
                         // Inline code
                         code: {

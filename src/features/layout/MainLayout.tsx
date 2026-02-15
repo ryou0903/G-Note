@@ -200,16 +200,16 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
             </aside>
 
             {/* Main Content Area */}
-            <main className="flex-1 flex flex-col min-w-0 relative bg-midnight">
+            <main
+                className="flex-1 flex flex-col min-w-0 relative bg-midnight"
+                onClick={() => { if (isSidebarOpen) setSidebarOpen(false); }}
+            >
                 {/* Header */}
                 <header className="flex items-center gap-4 p-4 border-b border-border">
                     {/* Mobile: hamburger menu, Desktop: sidebar toggle when collapsed */}
                     <button
                         onClick={() => setSidebarOpen(!isSidebarOpen)}
-                        className={classNames(
-                            "p-2 text-secondary hover:text-white hover:bg-surface-highlight rounded-lg transition-colors",
-                            isSidebarOpen && isDesktop && "hidden"
-                        )}
+                        className="p-2 text-secondary hover:text-white hover:bg-surface-highlight rounded-lg transition-colors"
                         title={isSidebarOpen ? "メニューを閉じる" : "メニューを開く"}
                     >
                         {isSidebarOpen ? <Menu size={24} /> : <PanelLeft size={24} />}
