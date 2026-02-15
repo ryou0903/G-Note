@@ -110,10 +110,7 @@ body {
   line-height: 1.4;
 }
 
-.prose h1:first-child,
-.prose h2:first-child,
-.prose h3:first-child,
-.prose h4:first-child {
+.prose > :first-child {
   margin-top: 0;
 }
 
