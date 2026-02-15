@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import classNames from 'classnames';
 import { FileEdit, FolderPlus, ArrowUpDown, Locate, ChevronRight, Settings, Folder, Menu, PanelLeft, Plus, ChevronUp, ChevronDown, Check } from 'lucide-react';
+import { SettingsModal } from '../settings/SettingsModal';
 
 interface MainLayoutProps {
     children: React.ReactNode;
@@ -58,6 +59,7 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
 }) => {
     const [isSidebarOpen, setSidebarOpen] = useState(false);
     const [showSortMenu, setShowSortMenu] = useState(false);
+    const [isSettingsOpen, setSettingsOpen] = useState(false);
     const isDesktop = useMediaQuery('(min-width: 768px)');
 
     return (
@@ -193,7 +195,10 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                         </button>
                         <p className="text-xs text-secondary mt-0.5">{noteCount} ファイル, {folderCount} フォルダ</p>
                     </div>
-                    <button className="p-2 text-secondary hover:text-white hover:bg-surface-highlight rounded-lg transition-colors">
+                    <button
+                        onClick={() => setSettingsOpen(true)}
+                        className="p-2 text-secondary hover:text-white hover:bg-surface-highlight rounded-lg transition-colors"
+                    >
                         <Settings size={18} />
                     </button>
                 </div>
@@ -242,6 +247,13 @@ export const MainLayout: React.FC<MainLayoutProps> = ({
                     onClick={() => setSidebarOpen(false)}
                 />
             )}
+
+            {/* Settings Modal */}
+            <SettingsModal
+                isOpen={isSettingsOpen}
+                onClose={() => setSettingsOpen(false)}
+                isDesktop={isDesktop}
+            />
         </div>
     );
 };
