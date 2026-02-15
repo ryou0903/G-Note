@@ -37,8 +37,8 @@ export default {
             typography: {
                 DEFAULT: {
                     css: {
-                        // Base line-height (default prose-base is 1.75, too spacious)
-                        lineHeight: '1.6',
+                        // Base line-height: match textarea's leading-normal (1.5)
+                        lineHeight: '1.5',
                         // Spacing
                         li: {
                             marginTop: '0.125em',
