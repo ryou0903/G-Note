@@ -137,13 +137,15 @@ export const Editor: React.FC<EditorProps> = ({ initialContent, isRendering, onS
   return (
     <div className="w-full h-full flex flex-col animate-fade-in">
       {isRendering ? (
-        <div className="flex-1 overflow-auto prose prose-invert prose-slate max-w-none p-4 md:p-8 selection:bg-accent/30 break-words leading-normal">
-          <ReactMarkdown
-            remarkPlugins={[remarkGfm]}
-            rehypePlugins={[rehypeHighlight, rehypeRaw]}
-          >
-            {content || "*本文なし*"}
-          </ReactMarkdown>
+        <div className="flex-1 overflow-auto p-4 md:p-8">
+          <div className="prose prose-invert prose-slate max-w-none selection:bg-accent/30 break-words leading-normal">
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              rehypePlugins={[rehypeHighlight, rehypeRaw]}
+            >
+              {content || "*本文なし*"}
+            </ReactMarkdown>
+          </div>
         </div>
       ) : (
         <textarea
