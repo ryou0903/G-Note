@@ -40,13 +40,13 @@ body {
 .prose p {
   margin-top: 0.35em;
   margin-bottom: 0.35em;
-  line-height: 1.6;
+  line-height: inherit;
 }
 
 .prose li {
   margin-top: 0.05em;
   margin-bottom: 0.05em;
-  line-height: 1.55;
+  line-height: inherit;
   padding-left: 0;
 }
 
